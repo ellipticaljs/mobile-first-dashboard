@@ -1,0 +1,17 @@
+{
+  "sassApp":"./app.scss",
+  "sassSrc":"./sass/**/*.scss",
+  "cssDest":"./public/css",
+  "devPath":"./public",
+  "devPort":"9030",
+  "appScriptPath":"./public/app",
+  "scriptSrc":"./public/app/**/*.js",
+  "scriptDest":"./public/scripts",
+  "livePort":"9040",
+  "livePath":"./public",
+  "liveHost":"127.0.0.1",
+  "importSrc":"./public/imports",
+  "vulcanDest":"./public/vulcanized",
+  "stripExcludes":"false",
+  "inlineScripts":"true"
+}

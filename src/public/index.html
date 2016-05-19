@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>My App</title>
+    <script src="/components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/imports/import.html">
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body fullbleed layout vertical preload>
+<paper-toast></paper-toast><!--app  notification component-->
+<md-confirm ea-bind="confirm-dialog"></md-confirm><!--app confirmation dialog component-->
+<md-dialog modal="true" modal-selector="body" header="Select Date Range" action="set" class="md"><!--app dialog-->
+    <db-datepicker service="DatePicker"></db-datepicker><!--dashboard datepicker component-->
+</md-dialog>
+<paper-drawer-panel responsive-width="1024px" style="display:none"><!-- app layout/drawer container-->
+    <paper-header-panel drawer>
+        <md-brand class="md hide-for-medium-down">
+            <span>dashboard</span>
+        </md-brand>
+        <img src="/css/img/pattern.png" class="hide-for-desktop"><!--touch material design pattern-->
+        <div data-menu-placeholder><!-- menu placeholder -->
+        </div>
+    </paper-header-panel>
+    <paper-header-panel main class="md">
+        <div data-toolbar-placeholder class="paper-header"><!-- toolbar placeholder-->
+        </div>
+        <md-progress secondary-color="transparent" color="#FF5722"></md-progress>
+        <div content class="md" content-placeholder><!-- views for Controller actions get loaded here-->
+        </div>
+    </paper-header-panel>
+</paper-drawer-panel>
+<ui-tooltip></ui-tooltip>
+</body>
+</html>
