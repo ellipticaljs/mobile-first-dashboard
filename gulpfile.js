@@ -121,13 +121,13 @@ function copyCommonPublicTask(){
 }
 
 function copyServicesTask(){
-    gulp.src('./src/public/services/**/*.*')
-        .pipe(gulp.dest('./public/services/'));
+    gulp.src('./src/public/app/services/**/*.*')
+        .pipe(gulp.dest('./public/app/services/'));
 }
 
 function copyProvidersTask(){
-    gulp.src('./src/public/providers/**/*.*')
-        .pipe(gulp.dest('./public/providers/'));
+    gulp.src('./src/public/app/providers/**/*.*')
+        .pipe(gulp.dest('./public/app/providers/'));
 }
 
 function copySassTask(){
