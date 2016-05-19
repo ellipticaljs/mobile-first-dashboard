@@ -104,6 +104,8 @@ gulp.task('watch', function () {
 
 function build(){
     copyCommonPublicTask();
+    copyServicesTask();
+    copyProvidersTask();
     copySassTask();
     copyIndexTask();
     copyBowerTask();
@@ -116,6 +118,16 @@ function build(){
 function copyCommonPublicTask(){
     gulp.src('./node_modules/dashboard-common/src/public/**/*.*')
         .pipe(gulp.dest('./public/'));
+}
+
+function copyServicesTask(){
+    gulp.src('./src/public/services/**/*.*')
+        .pipe(gulp.dest('./public/services/'));
+}
+
+function copyProvidersTask(){
+    gulp.src('./src/public/providers/**/*.*')
+        .pipe(gulp.dest('./public/providers/'));
 }
 
 function copySassTask(){
