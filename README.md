@@ -61,6 +61,7 @@ localhost:9040
 
 gulp sass-compile
 gulp app-build-imports
+gulp vulcanize
 
 ```
 
