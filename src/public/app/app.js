@@ -11,6 +11,7 @@ elliptical.module=(function (app) {
     var $Sort = elliptical.$Sort;
     var DomEvent = elliptical.DomEvent;
     var $Rest = elliptical.$Rest;
+    var Morph=null;
     var PRELOAD_DELAY=1000;
     app.USER_MODEL_KEY='users';
     app.ORDER_MODEL_KEY='orders';
@@ -75,6 +76,8 @@ elliptical.module=(function (app) {
 
         ///global callback to handle route authentication
         app.use(elliptical.globalCallback(function (req, res, next) {
+            if(!Morph) Morph=container.getType('Morph');
+            Morph.reset();
             var tokenCookie=req.cookies.token;
             if(!tokenCookie  && req.route !=='/profile/login'){
                 Location.href='/Profile/Login';
