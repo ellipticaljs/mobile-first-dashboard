@@ -40,7 +40,7 @@ elliptical.module = (function (app) {
                     city:faker.address.city(),
                     state:faker.address.stateAbbr(),
                     zipCode:faker.address.zipCode(),
-                    phone:faker.phone.phoneNumber(),
+                    phoneNumber:faker.phone.phoneNumber(),
                     signUpDate:faker.date.recent(365).toLocaleDateString(),
                     active:true,
                     orderCount:0
@@ -139,7 +139,7 @@ elliptical.module = (function (app) {
                         city:user.city,
                         state:user.state,
                         zipCode:user.zipCode,
-                        phone:user.phone
+                        phoneNumber:user.phoneNumber
                     }
                 };
                 var shippingAddress={
@@ -150,7 +150,7 @@ elliptical.module = (function (app) {
                     city:order.billingAddress.city,
                     state:order.billingAddress.state,
                     zipCode:order.billingAddress.zipCode,
-                    phone:order.billingAddress.phone
+                    phoneNumber:order.billingAddress.phoneNumber
                 };
                 order.shippingAddress=shippingAddress;
                 var orderItems=generateOrderItems();
