@@ -34,6 +34,7 @@ cd my-project
 
 npm install
 gulp init
+gulp build-app
 bower install
 
 ```
@@ -42,8 +43,7 @@ bower install
 #tasks
 
 ``` bash
-
-gulp start-live-app
+gulp start-app
 
 ```
 

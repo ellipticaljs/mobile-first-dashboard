@@ -14,52 +14,20 @@ gulp.task('default',function(){
     tasks.default();
 });
 
-gulp.task('start-live-server',function(){
-    tasks.startLiveServer();
-});
-
 gulp.task('start-server',function(){
     tasks.startServer();
-});
-
-gulp.task('start-live',function(){
-    tasks.startLive();
 });
 
 gulp.task('start',function(){
     tasks.start();
 });
 
-gulp.task('start-live-app',function(){
-    tasks.startLiveApp();
-});
-
 gulp.task('start-app',function(){
     tasks.startApp();
 });
 
-gulp.task('start-live-sass',function(){
-    tasks.startLiveSass();
-});
-
-gulp.task('start-sass',function(){
-    tasks.startSass();
-});
-
-gulp.task('start-live-app-no-sass',function(){
-    tasks.startLiveAppNoSass();
-});
-
 gulp.task('start-app-no-sass',function(){
     tasks.startAppNoSass();
-});
-
-gulp.task('start-live-scripts',function(){
-    tasks.startLiveScripts();
-});
-
-gulp.task('start-scripts',function(){
-    tasks.startScripts();
 });
 
 gulp.task('sass-compile', function () {
@@ -70,14 +38,6 @@ gulp.task('sass-watch', function () {
     tasks.sassWatch();
 });
 
-gulp.task('scripts-watch', function () {
-    tasks.scriptsWatch();
-});
-
-gulp.task('scripts-build', function () {
-    tasks.scriptsBuild();
-});
-
 gulp.task('app-watch', function () {
     tasks.appWatch();
 });
@@ -86,26 +46,38 @@ gulp.task('app-build', function () {
     tasks.appBuild();
 });
 
-gulp.task('vulcanize', function () {
-    tasks.vulcanize();
+gulp.task('app-imports', function () {
+    tasks.appImports();
 });
 
-gulp.task('app-build-imports', function () {
-    tasks.appBuildImports();
-});
-
-gulp.task('app-watch-imports', function () {
-    tasks.appWatchImports();
+gulp.task('app-scaffold', function () {
+    tasks.appImports();
 });
 
 gulp.task('watch', function () {
     tasks.watch();
 });
 
+gulp.task('app-clean', function () {
+    tasks.appClean();
+});
+
+gulp.task('vulcanize', function () {
+    tasks.vulcanize();
+});
+
+gulp.task('vulcanize-min', function () {
+    tasks.vulcanizeMin();
+});
+
+
+
 function build(){
     copyCommonPublicTask();
     copyServicesTask();
     copyProvidersTask();
+    copyDependenciesTask();
+    copyReferencesTask();
     copySassTask();
     copyIndexTask();
     copyBowerTask();
@@ -122,6 +94,16 @@ function copyCommonPublicTask(){
 
 function copyServicesTask(){
     gulp.src('./src/public/app/services/**/*.*')
+        .pipe(gulp.dest('./public/app/services/'));
+}
+
+function copyDependenciesTask(){
+    gulp.src('./src/public/app/dependencies/**/*.*')
+        .pipe(gulp.dest('./public/app/services/'));
+}
+
+function copyReferencesTask(){
+    gulp.src('./src/public/app/references/**/*.*')
         .pipe(gulp.dest('./public/app/services/'));
 }
 
