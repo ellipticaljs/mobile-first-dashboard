@@ -82,6 +82,7 @@ function build(){
     copyIndexTask();
     copyBowerTask();
     copyMainAppFileTask();
+    copyImportFileTask();
     copyAppImportFileTask();
     copyVulcanized();
 
@@ -99,12 +100,12 @@ function copyServicesTask(){
 
 function copyDependenciesTask(){
     gulp.src('./src/public/app/dependencies/**/*.*')
-        .pipe(gulp.dest('./public/app/services/'));
+        .pipe(gulp.dest('./public/app/dependencies/'));
 }
 
 function copyReferencesTask(){
     gulp.src('./src/public/app/references/**/*.*')
-        .pipe(gulp.dest('./public/app/services/'));
+        .pipe(gulp.dest('./public/app/references/'));
 }
 
 function copyProvidersTask(){
@@ -130,6 +131,11 @@ function copyBowerTask(){
 function copyMainAppFileTask(){
     gulp.src('./src/public/app/app.js')
         .pipe(gulp.dest('./public/app/'));
+}
+
+function copyImportFileTask(){
+    gulp.src('./src/public/imports/import.html')
+        .pipe(gulp.dest('./public/imports/'));
 }
 
 function copyAppImportFileTask(){
