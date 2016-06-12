@@ -60,8 +60,13 @@ localhost:9040
 ``` bash
 
 gulp sass-compile
-gulp app-build-imports
+gulp sass-watch
+gulp app-build
+gulp app-clean
+gulp app-watch
+gulp watch
 gulp vulcanize
+gulp vulcanize-min
 
 ```
 
