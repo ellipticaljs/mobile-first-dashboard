@@ -34,7 +34,7 @@ cd my-project
 
 npm install
 gulp init
-gulp build-app
+gulp app-build
 bower install
 
 ```

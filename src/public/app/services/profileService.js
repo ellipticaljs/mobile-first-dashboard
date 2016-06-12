@@ -6,11 +6,11 @@ var notify = container.getType('Notify');
 var Event = container.getType('Event');
 
 class Profile{
-    get(){
+    static get(){
         return $Cookie.get('profile'); 
     }
     
-    login(params,callback){
+    static login(params,callback){
         this.$provider.post(params, 'ProfileLogin', function (err, data) {
             if (!err) {
                 //success
@@ -30,7 +30,7 @@ class Profile{
         });    
     }
     
-    logout(params,callback){
+    static logout(params,callback){
         $Cookie.delete('token');
         $Cookie.delete('profile');
 
@@ -40,7 +40,7 @@ class Profile{
         }
     }
     
-    authenticated(){
+    static authenticated(){
         var token = $Cookie.get('token');
         var profile = $Cookie.get('profile');
         return (token !== undefined && token) ? profile : null;
