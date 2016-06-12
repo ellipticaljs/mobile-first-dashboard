@@ -62,6 +62,7 @@ localhost:9040
 gulp sass-compile
 gulp sass-watch
 gulp app-build
+gulp app-imports
 gulp app-clean
 gulp app-watch
 gulp watch
