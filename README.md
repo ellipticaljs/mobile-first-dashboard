@@ -1,7 +1,7 @@
 Mobile First Dashboard
 ===========================
 
-Installs a default polymer/ellipticaljs dashboard app with mocked data.
+Installs a default es2015 polymer/ellipticaljs dashboard app with mocked data.
 
 # Installation
 
