@@ -72,3 +72,39 @@ gulp vulcanize-min
 ```
 
 
+## Scaffold tasks
+
+```bash
+
+# crud controller
+gulp db-crud-controller --class <className> --icon <icon>
+
+# empty controller
+gulp db-empty-controller --name <controllerName>
+
+# content controller
+gulp db-empty-controller --name <controllerName>
+
+# empty view
+gulp db-empty-view --name <view> --folder <viewFolder>
+
+# content view
+gulp db-content-view --name <view> --folder <viewFolder>
+
+# list view
+gulp db-list-view --name <view> --folder <viewFolder> --class <className> --icon <icon>
+
+# grid view
+gulp db-grid-view --name <view> --folder <viewFolder> --class <className> --icon <icon>
+
+# service
+gulp db-service --class <className>
+
+# provider
+gulp db-provider --class <className>
+
+# binding
+gulp db-binding --name <name>
+
+
+```

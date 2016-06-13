@@ -2,9 +2,12 @@
 var config=require('./config.json');
 var Tasks=require('elliptical-gulp');
 var gulp=require('gulp');
-
+var ScaffoldTasks=require('elliptical-scaffold');
 
 var tasks=new Tasks(config);
+var scaffoldTasks=new ScaffoldTasks(config);
+
+// app tasks -----------------------------------------------------------------------------------------------------------
 
 gulp.task('init',function(){
     build();
@@ -69,6 +72,187 @@ gulp.task('vulcanize', function () {
 gulp.task('vulcanize-min', function () {
     tasks.vulcanizeMin();
 });
+
+
+
+///scaffold tasks ------------------------------------------------------------------------------------------------------
+gulp.task('db-crud-controller', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var className=argv.class;
+    var icon=argv.icon;
+    if(icon===undefined) icon='edit';
+    if(className===undefined){
+        console.log("Error: Class required");
+        return;
+    }
+    var params={
+        class:className,
+        icon:icon
+    };
+    scaffoldTasks.dbCreateCrudController(config,params);
+});
+
+gulp.task('db-empty-controller', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    if(name===undefined){
+        console.log("Error: Controller name required");
+        return;
+    }
+    var params={
+        name:name
+    };
+    scaffoldTasks.dbCreateEmptyController(config,params);
+});
+
+gulp.task('db-content-controller', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    if(name===undefined){
+        console.log("Error: Controller name required");
+        return;
+    }
+    var params={
+        name:name
+    };
+    scaffoldTasks.dbCreateContentController(config,params);
+});
+
+gulp.task('db-empty-view', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    var folder=argv.folder;
+    if(name===undefined){
+        console.log("Error: view name required");
+        return;
+    }
+    if(folder===undefined){
+        console.log("Error: view folder required");
+        return;
+    }
+    var params={
+        name:name,
+        folder:folder
+    };
+    scaffoldTasks.dbCreateEmptyView(config,params);
+});
+
+gulp.task('db-content-view', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    var folder=argv.folder;
+    if(name===undefined){
+        console.log("Error: view name required");
+        return;
+    }
+    if(folder===undefined){
+        console.log("Error: view folder required");
+        return;
+    }
+    var params={
+        name:name,
+        folder:folder
+    };
+    scaffoldTasks.dbCreateContentView(config,params);
+});
+
+gulp.task('db-list-view', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    var folder=argv.folder;
+    var className=argv.class;
+    var icon=argv.icon;
+    if(name===undefined){
+        console.log("Error: view name required");
+        return;
+    }
+    if(folder===undefined){
+        console.log("Error: view folder required");
+        return;
+    }
+    if(className===undefined){
+        console.log("Error: Class required");
+        return;
+    }
+    if(icon===undefined) icon='edit';
+    var params={
+        name:name,
+        folder:folder,
+        class:className,
+        icon:icon
+    };
+    scaffoldTasks.dbCreateListView(config,params);
+});
+
+gulp.task('db-grid-view', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    var folder=argv.folder;
+    var className=argv.class;
+    var icon=argv.icon;
+    if(name===undefined){
+        console.log("Error: view name required");
+        return;
+    }
+    if(folder===undefined){
+        console.log("Error: view folder required");
+        return;
+    }
+    if(className===undefined){
+        console.log("Error: Class required");
+        return;
+    }
+    if(icon===undefined) icon='edit';
+    var params={
+        name:name,
+        folder:folder,
+        class:className,
+        icon:icon
+    };
+    scaffoldTasks.dbCreateGridView(config,params);
+});
+
+gulp.task('db-binding', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    if(name===undefined){
+        console.log("Error:  name required");
+        return;
+    }
+    var params={
+        name:name
+    };
+    scaffoldTasks.dbCreateBinding(config,params);
+});
+
+gulp.task('db-service', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var className=argv.class;
+    if(className===undefined){
+        console.log("Error: class required");
+        return;
+    }
+    var params={
+        class:className
+    };
+    scaffoldTasks.dbCreateService(config,params);
+});
+
+gulp.task('db-provider', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var className=argv.class;
+    if(className===undefined){
+        console.log("Error: class required");
+        return;
+    }
+    var params={
+        class:className
+    };
+    scaffoldTasks.dbCreateProvider(config,params);
+});
+
+// --private build tasks------------------------------------------------------------------------------------------------
+
 
 
 
