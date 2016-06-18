@@ -14,6 +14,12 @@ var GenericRepository = elliptical.GenericRepository;
 var USER_KEY =keys.USER_MODEL_KEY;
 var ORDER_KEY = keys.ORDER_MODEL_KEY;
 var DISCOUNT_KEY = keys.DISCOUNT_MODEL_KEY;
+var USER_TOTAL=keys.USERS;
+var ORDER_ID_MAX=keys.ORDER_ID_MAX;
+var USER_MAX_ORDER_NO=keys.USER_MAX_ORDER_NO;
+var ORDER_MIN_PRICE=keys.ORDER_MIN_PRICE;
+var ORDER_MAX_PRICE=keys.ORDER_MAX_PRICE;
+var ORDER_TRANSACTION_ID_LENGTH=keys.ORDER_TRANSACTION_ID_LENGTH;
 var REPOPULATE = keys.REPOPULATE;
 var USER_MODEL = null;
 var ORDER_MODEL = null;
@@ -57,8 +63,8 @@ function userRepository() {
 
     USER_MODEL = $Local.get(USER_KEY);
     if (!USER_MODEL || REPOPULATE) {
-        app.REPOPULATE = false;
-        USER_MODEL = generateModel(500);
+        REPOPULATE = false;
+        USER_MODEL = generateModel(USER_TOTAL);
         $Local.set(USER_KEY, USER_MODEL);
     }
 
@@ -89,7 +95,7 @@ function userRepository() {
 function orderRepository() {
 
     function generatePrice() {
-        return getRandomInt(20, 150);
+        return getRandomInt(ORDER_MIN_PRICE, ORDER_MAX_PRICE);
     }
 
     var generatePaymentFields = function () {
@@ -98,7 +104,7 @@ function orderRepository() {
     };
 
     var generateResponseFields = function () {
-        return [{key: 'transactionId', 'value': random.id(12)}]
+        return [{key: 'transactionId', 'value': random.id(ORDER_TRANSACTION_ID_LENGTH)}];
     };
 
     var generateOrderItems = function () {
@@ -132,7 +138,7 @@ function orderRepository() {
     var generateUserOrders = function (MAX, user) {
         for (var i = 0; i < MAX; i++) {
             var order = {
-                id: faker.random.number({min: 100, max: 50000}),
+                id: faker.random.number({min: 100, max: ORDER_ID_MAX}),
                 userId: user.id,
                 userAvatar: faker.image.avatar(),
                 billingAddress: {
@@ -194,13 +200,12 @@ function orderRepository() {
         ORDER_MODEL = [];
         USER_MODEL.forEach(function (user, index) {
             if (index % 4 === 0) {
-                var max = getRandomInt(1, 5);
+                var max = getRandomInt(1, USER_MAX_ORDER_NO);
                 generateUserOrders(max, user);
             }
         });
 
         $Local.set(ORDER_KEY, ORDER_MODEL);
-        //re-save users(user object now populated with orderCount property)
         $Local.set(USER_KEY, USER_MODEL);
     }
 
@@ -398,7 +403,7 @@ function orderAlertRepository() {
 function discountRepository() {
     DISCOUNT_MODEL = $Local.get(DISCOUNT_KEY);
     if (!DISCOUNT_MODEL || REPOPULATE) {
-        app.REPOPULATE = false;
+        REPOPULATE = false;
         DISCOUNT_MODEL = [];
         $Local.set(DISCOUNT_KEY, DISCOUNT_MODEL);
     }
