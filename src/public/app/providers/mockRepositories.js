@@ -112,7 +112,7 @@ function orderRepository() {
         var max = getRandomInt(1, 4);
         var items = [];
 
-        for (i = 0; i < max; i++) {
+        for (var i = 0; i < max; i++) {
             var price = generatePrice();
             total += price;
             var item = {
