@@ -251,6 +251,26 @@ gulp.task('db-provider', function () {
     scaffoldTasks.dbCreateProvider(config,params);
 });
 
+gulp.task('web-component', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var tag=argv.tag;
+    var dir=argv.d;
+    if(tag===undefined){
+        console.log("Error: tag required");
+        return;
+    }
+    if(dir===undefined){
+        console.log("Error: directory location required");
+        return;
+    }
+    var params={
+        tag:tag,
+        dir:dir
+    };
+    scaffoldTasks.webCreateComponent(config,params);
+});
+
+
 // --private build tasks------------------------------------------------------------------------------------------------
 
 
