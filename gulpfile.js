@@ -212,6 +212,34 @@ gulp.task('db-grid-view', function () {
     scaffoldTasks.dbCreateGridView(config,params);
 });
 
+gulp.task('db-detail-view', function () {
+    var argv = require('minimist')(process.argv.slice(2));
+    var name=argv.name;
+    var folder=argv.folder;
+    var className=argv.class;
+    var icon=argv.icon;
+    if(name===undefined){
+        console.log("Error: view name required");
+        return;
+    }
+    if(folder===undefined){
+        console.log("Error: view folder required");
+        return;
+    }
+    if(className===undefined){
+        console.log("Error: Class required");
+        return;
+    }
+    if(icon===undefined) icon='edit';
+    var params={
+        name:name,
+        folder:folder,
+        class:className,
+        icon:icon
+    };
+    scaffoldTasks.dbCreateDetailView(config,params);
+});
+
 gulp.task('db-binding', function () {
     var argv = require('minimist')(process.argv.slice(2));
     var name=argv.name;
