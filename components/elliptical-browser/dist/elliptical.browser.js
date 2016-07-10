@@ -663,7 +663,6 @@
             this.Router = Router;
             this._defineProps();
             this._historyEventListener();
-            this.context={};
             var initStack = function (app) {
 
                 app.router = function appRouter() {
