@@ -115,3 +115,10 @@ gulp web-component --tag <tag> --d <directory>
 
 
 ```
+
+# Demo
+
+http://ellipticaljs.github.io/mobile-first-dashboard/
+
+username:admin
+password:admin
