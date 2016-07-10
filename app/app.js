@@ -15,7 +15,7 @@ app.context.fabHide = ''; ///=='hide', to hide
 
 //-------configuration-------------------------------------------------
 //views root
-var viewsRoot = '/app/views';
+var viewsRoot = '/mobile-first-dashboard/app/views';
 var $Template = elliptical.$Template; ///template provider
 $Template.setRoot(viewsRoot);  ///set views root
 var View=elliptical.View;

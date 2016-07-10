@@ -43,7 +43,7 @@
 
     //-------configuration-------------------------------------------------
     //views root
-    var viewsRoot = '/app/views';
+    var viewsRoot = '/mobile-first-dashboard/app/views';
     var $Template = _elliptical2.default.$Template; ///template provider
     $Template.setRoot(viewsRoot); ///set views root
     var View = _elliptical2.default.View;
