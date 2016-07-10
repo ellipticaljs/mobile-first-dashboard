@@ -84086,8 +84086,8 @@ return $.widget;
         _menuEvents: function () {
             var click = this._data.click;
             this._event($(window), 'menu.toggle.disable', this._onDisableToggle.bind(this));
-            this._event(this.element, click, 'menu-dropdown>menu-item>a', this._onItemClick.bind(this));
-            this._event(this.element, click, 'header:not("' + this._toggleSelector + '")', this._onHeaderClick.bind(this));
+            this._event(this.element, click, 'menu-dropdown>menu-item>a:not([data-ignore])', this._onItemClick.bind(this));
+            this._event(this.element, click, 'header:not(.dropdown,[data-ignore])', this._onHeaderClick.bind(this));
             if (this._mq.touch && this.closeDrawer) {
                 this._event(this.element, click, 'a', this._onDeviceClick.bind(this));
             }
@@ -84324,7 +84324,7 @@ return $.widget;
             var self = this;
             var click = this._press();
             var element = this.element;
-            this._event(element, click, this._toggleSelector, function (event) {
+            this._event(element, click, this._toggleSelector + ':not([data-ignore])', function (event) {
                 var target = $(event.currentTarget);
                 var collapsible = self._getCollapsibleFromTarget(target);
                 self._onCollapse(collapsible, target, event);
