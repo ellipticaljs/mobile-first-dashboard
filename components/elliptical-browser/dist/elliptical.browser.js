@@ -765,26 +765,10 @@
             if (typeof env !== 'undefined') {
                 this.context.ENV = env.toLowerCase();
             } else {
-                if (!setFromDocumentQuery(this)) {
-                    setFromLocationQuery(this);
-                }
-            }
-
-            function setFromDocumentQuery(c) {
-                var html = $(HTML);
-                var dataEnv = html.attr(DATA_ENVIRONMENT);
-                if (typeof dataEnv !== 'undefined') {
-                    c.context.ENV = dataEnv.toLowerCase();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            function setFromLocationQuery(c) {
                 var hostname = document.location.hostname;
-                c.context.ENV = (network.isLocalHost(hostname)) ? DEVELOPMENT : PRODUCTION;
+                this.context.ENV = (network.isLocalHost(hostname)) ? DEVELOPMENT : PRODUCTION;
             }
+            
         },
 
         /**
