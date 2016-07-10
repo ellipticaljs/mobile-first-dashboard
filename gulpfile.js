@@ -37,6 +37,10 @@ gulp.task('sass-compile', function () {
     tasks.sassCompile();
 });
 
+gulp.task('sass-compile-min', function () {
+    tasks.sassCompileMin();
+});
+
 gulp.task('sass-watch', function () {
     tasks.sassWatch();
 });
