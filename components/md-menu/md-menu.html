@@ -99,7 +99,7 @@
             var click = this._data.click;
             this._event($(window), 'menu.toggle.disable', this._onDisableToggle.bind(this));
             this._event(this.element, click, 'menu-dropdown>menu-item>a:not([data-ignore])', this._onItemClick.bind(this));
-            this._event(this.element, click, 'header:not("' + this._toggleSelector + '")', this._onHeaderClick.bind(this));
+            this._event(this.element, click, 'header:not(.dropdown,[data-ignore])', this._onHeaderClick.bind(this));
             if (this._mq.touch && this.closeDrawer) {
                 this._event(this.element, click, 'a', this._onDeviceClick.bind(this));
             }
