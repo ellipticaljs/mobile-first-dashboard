@@ -1,0 +1,53 @@
+{
+  "name": "elliptical-date-helpers",
+  "description": "Dust Date Helpers",
+  "version": "1.0.6",
+  "main": "dist/date.helpers.js",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dust",
+    "helpers"
+  ],
+  "homepage": "https://github.com/ellipticaljs/date-helpers",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos"
+  ],
+  "dependencies": {
+    "elliptical-dust-helpers": "~1.0.1",
+    "moment-import": "~1.0.0"
+  },
+  "_release": "1.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.6",
+    "commit": "1e57dd782328f9b6af87e76b41a0fc5c44741d9c"
+  },
+  "_source": "https://github.com/ellipticaljs/date-helpers.git",
+  "_target": "~1.0.5",
+  "_originalSource": "elliptical-date-helpers"
+}

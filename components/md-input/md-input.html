@@ -1,0 +1,217 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-input">
+    <style>
+        :host>input.error{
+            background:none !important;
+            border-color:#bc5251 !important;
+            border-top-width:0 !important;
+            border-left-width:0 !important;
+            border-right-width:0 !important;
+        }
+        :host>input.error+label{
+            color:#bc5251;
+        }
+    </style>
+    <template>
+        <span class="icon-[[icon]]"></span>
+        <input type="[[type]]" placeholder="[[placeholder]]" value="[[value]]">
+        <label class="[[active]]">[[label]]</label>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-input',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            placeholder: {
+                type: String,
+                value: ''
+            },
+            type: {
+                type: String,
+                value: 'text'
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            icon: {
+                type: String,
+                value: null
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            event: {
+                type: String,
+                value: 'md.input.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            },
+            readonly: {
+                type: Boolean,
+                value: false
+            },
+            numeric:{
+                type:Boolean,
+                value:false
+            },
+            min:{
+                type:Number,
+                value:0
+            },
+            max:{
+                type:Number,
+                value:0
+            },
+            disableChangeEvent:{
+                type:Boolean,
+                value:false
+            }
+
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setLabel();
+            this._setValue();
+            this._setIcon();
+            this._setReadOnly();
+            this._setDisabled();
+            if(this.numeric) this._keyDownEvent();
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'focus', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if (!self.readonly && (!placeholder || placeholder==='')) {
+                    $(this).siblings('label, i').addClass('active');
+                    self.element.find('span').addClass('active');
+                }
+            });
+
+            this._event(this.element, 'blur', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if ($input.val().length === 0 && (!placeholder || placeholder==='')) {
+                    $input.siblings('label, i').removeClass('active');
+                }
+                self.element.find('span').removeClass('active');
+                self._onBlur(event);
+            });
+
+            this._event(this.element, 'change', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if (!self.readonly && (!placeholder || placeholder==='')) {
+                    $input.siblings('label, i').addClass('active');
+                    self.element.find('span').addClass('active');
+                }
+                self._resetSemanticState();
+                if(!self.disableChangeEvent) self._onChange(event);
+            });
+        },
+
+        _keyDownEvent:function(){
+            var self=this;
+            this._event(this.element, 'keydown', 'input', function (e) {
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Allow: Ctrl+A, Command+A
+                        (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                        // Allow: home, end, left, right, down, up
+                        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        },
+
+        _setValue: function () {
+            if (this.dataValue && this.dataValue !== undefined) {
+                this.value = this.dataValue;
+                var label = this.element.find('label');
+                label.addClass('active');
+            }
+        },
+
+
+        _onIconSet: function (span) {
+            span.addClass('prefix');
+        },
+
+        _onChange: function (event) {
+            var element = $(event.currentTarget);
+            var data = {
+                value: element.val(),
+                id: element.attr('id'),
+                name: element.attr('name')
+            };
+            this.element.trigger('md.input.change', data);
+        },
+
+        _onBlur:function(event){
+            var element = $(event.currentTarget);
+            var value=element.val();
+            if(value==='') return;
+            if(this.numeric){
+                value=parseFloat(value);
+                if(this.min){
+                    if(value < this.min) element.val('');
+                }
+                if(this.max){
+                    if(value > this.max) element.val('');
+                }
+            }
+        },
+
+        setActive:function(){
+            var label = this.element.find('label');
+            label.addClass('active');
+        },
+
+        setName:function(val){
+            this.dataName=val;
+            this._setName();
+        },
+
+        setId:function(val){
+            this.dataId=val;
+            this._setId();
+        }
+    });
+
+</script>

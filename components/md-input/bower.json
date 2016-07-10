@@ -1,0 +1,59 @@
+{
+  "name": "md-input",
+  "version": "1.2.1",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design",
+    "radio button",
+    "form elements",
+    "checkbox",
+    "switch",
+    "range",
+    "select"
+  ],
+  "main": "md-input.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-input",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "sass-md-components":"~1.1.0",
+    "md-icons": "~1.0.5"
+  },
+  "devDependencies": {
+    "mark-down": "elliptical-mark-down#~1.0.5",
+    "css-docs": "elliptical-css-docs#~1.0.1",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

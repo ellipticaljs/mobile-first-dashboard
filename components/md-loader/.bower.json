@@ -1,0 +1,59 @@
+{
+  "name": "md-loader",
+  "version": "1.2.0",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design"
+  ],
+  "main": "md-loader.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-loader/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "neon-animation": "PolymerElements/neon-animation#~1.2.2"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.0",
+    "commit": "da15f1cab2839c78e0a911f7203e72868f281f0a"
+  },
+  "_source": "https://github.com/EllipticalElements/md-loader.git",
+  "_target": "~1.2.0",
+  "_originalSource": "md-loader"
+}

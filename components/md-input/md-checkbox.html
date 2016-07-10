@@ -1,0 +1,89 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+<link rel="import" href="md-checkbox-list.html">
+
+<dom-module id="md-checkbox">
+    <style></style>
+    <template>
+        <input type="checkbox" class="[[filled]]">
+        <label>[[label]]</label>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-checkbox',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: null
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            cssClass: {
+                type: String,
+                value: null
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            dataChecked: {
+                type: Boolean,
+                value: false
+            },
+            event: {
+                type: String,
+                value: 'md.checkbox.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setValueProp();
+            this._setCheckedProp();
+            this._setId();
+            this._setName();
+            this._setLabel();
+            this._setValue();
+            this._setChecked();
+            this._setDisabled();
+            this._setInputVisibility();
+        },
+
+        _onChange: function (event) {
+            var element = $(event.currentTarget);
+            var checked = element.is(':checked');
+            var data = {
+                value: element.val(),
+                checked: checked,
+                id: element.attr('id'),
+                name: element.attr('name')
+            };
+            this.element.trigger('md.checkbox.change', data);
+            (checked) ? this.element.attr('checked', '') : this.element.removeAttr('checked');
+        }
+    });
+
+</script>

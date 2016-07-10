@@ -1,0 +1,177 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../neon-animation/neon-animations.html">
+
+<dom-module id="md-confirm">
+    <style>
+        :host{
+            display:none;
+            padding:1em;
+            background:#fff;
+            position:fixed;
+            height:300px;
+            width:60%;
+            top: calc(50% - 250px);
+            left:20%;
+            z-index:120;
+            box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+        }
+        :host .header{
+            width:100%;
+            text-align: center;
+            display:block;
+            padding: .25em 0;
+            margin:0;
+            font-size:22px;
+        }
+        :host .confirm-body{
+            height:150px;
+            overflow-y:scroll;
+        }
+        :host .buttons paper-button{
+            margin-left:1em;
+        }
+        :host .flex-end{
+            display:-webkit-flex;
+            display:flex;
+            -webkit-justify-content:flex-end;
+            justify-content:flex-end;
+        }
+    </style>
+    <template>
+        <h3 class="header">{{title}}</h3>
+        <div class="confirm-body">
+            <div class="body" id="confirmMessageBody">{{message}}</div>
+        </div>
+        <div class="flex-end buttons md">
+            <paper-button id="confirmCancelButton">{{cancelText}}</paper-button>
+            <paper-button id="confirmOKButton">{{okText}}</paper-button>
+        </div>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-confirm',
+
+        behaviors:[Polymer.NeonAnimationRunnerBehavior,Elliptical.ComponentBehavior],
+
+        properties: {
+            opened: {
+                type: Boolean
+            },
+            modal:{
+                type: Boolean,
+                value:true
+            },
+            cancelText:{
+                value:'Cancel'
+            },
+            okText:{
+                value:'OK'
+            },
+            message:{
+                value: 'Accept this action or cancel it...'
+            },
+            title:{
+                value:'Confirm Action'
+            },
+            cancelCss:{
+                value:''
+            },
+            okCss:{
+                value:'blue'
+            },
+            animationConfig: {
+                value: function() {
+                    return {
+                        'entry': {
+                            // neon-animation/animations/scale-up-animation.html
+                            name: 'scale-up-animation',
+                            node: this
+                        },
+                        'exit': {
+                            // neon-animation-animations/fade-out-animation.html
+                            name: 'fade-out-animation',
+                            node: this
+                        }
+                    }
+                }
+            }
+        },
+
+        listeners:{
+            'neon-animation-finish': '_onNeonAnimationFinish',
+            'confirmCancelButton.tap':'_onCancel',
+            'confirmOKButton.tap':'_onOK'
+        },
+
+        ready:function(){
+            this._buttonCss();
+        },
+
+        _buttonCss:function(){
+            this.$.confirmOKButton.classList.add('md');
+            this.$.confirmOKButton.classList.add(this.okCss);
+            if(this.cancelCss !==''){
+                this.$.confirmCancelButton.classList.add('md');
+                this.$.confirmCancelButton.classList.add(this.cancelCss);
+            }
+        },
+
+        setContent:function(title,message,isHtml){
+            this.title=title;
+            if(isHtml && isHtml !==undefined){
+                this.$.confirmMessageBody.innerHTML=message;
+            }else{
+                this.message=message;
+            }
+        },
+
+        show:function(fn){
+            this.opened = true;
+            this.style.display = 'block';
+            if(this.modal){
+                this._setModal({zIndex:110});
+            }
+            this.playAnimation('entry');
+            if(fn){
+                this._fn=fn;
+            }
+        },
+
+        hide:function(){
+            this.opened = false;
+            this.playAnimation('exit');
+            if(this.modal){
+                this._removeModal();
+            }
+        },
+
+        _onNeonAnimationFinish: function() {
+            if (!this.opened) {
+                this.style.display = 'none';
+            }
+        },
+
+        _onOK:function(e){
+            this.hide();
+            if(this._fn){
+                this._fn(true);
+                this._fn=null;
+            }
+        },
+
+        _onCancel:function(e){
+            this.hide();
+            if(this._fn){
+                this._fn(false);
+                this._fn=null;
+            }
+        }
+    });
+
+</script>

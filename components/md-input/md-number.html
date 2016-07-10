@@ -1,0 +1,194 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-number">
+    <style>
+        :host{
+            display:-webkit-flex;
+            display:flex;
+        }
+        :host md-input{
+            width:75px;
+            margin-right:2em;
+        }
+        :host .press-button{
+            padding:.5em;
+            margin-right:.75em;
+            position:relative;
+            cursor:pointer;
+        }
+        :host[elevation] .press-button.paper-button-0{
+           min-width:0;
+        }
+        :host>.press-box{
+            display:-webkit-flex;
+            display:flex;
+            -webkit-align-items: center;
+            align-items: center;
+
+        }
+    </style>
+    <template>
+        <md-input></md-input>
+        <div class="press-box">
+            <paper-button class="press-button" data-id="add" raised>
+                <paper-ripple></paper-ripple>
+                <span class="icon-add"></span>
+            </paper-button>
+        </div>
+        <div class="press-box">
+            <paper-button class="press-button" data-id="remove" raised>
+                <paper-ripple></paper-ripple>
+                <span class="icon-remove"></span>
+            </paper-button>
+        </div>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-number',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            icon: {
+                type: String,
+                value: null
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: "1"
+            },
+            event: {
+                type: String,
+                value: 'md.number.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            },
+            readonly: {
+                type: Boolean,
+                value: false
+            },
+            cssClass:{
+                type:String,
+                value:null
+            },
+            _input:{
+                type:Object,
+                value:null
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._setInput();
+            this._setButtonCss();
+            this._inputEvents();
+        },
+
+        _setInput:function(){
+            var number=this._getInput();
+            number.label=this.label;
+            number.required=this.required;
+            number.icon=this.icon;
+            number.setId(this.dataId);
+            number.setName(this.dataName);
+            number.dataValue=this.dataValue;
+            number.disabled=this.disabled;
+            number.readonly=this.readonly;
+            number.value=this.dataValue;
+            number.setActive();
+        },
+
+        _setButtonCss:function(){
+            if(this.cssClass){
+                var css=this.cssClass.split(' ');
+                var button=this.element.find('.press-button');
+                css.forEach(function(c){
+                    button.addClass(c);
+                });
+            }
+        },
+
+        _inputEvents: function () {
+            var click=this._data.click;
+            this._event(this.element, click, '.press-button', this._onPress.bind(this));
+            this._event(this.element, 'change', 'input', this._onChange.bind(this));
+        },
+
+        _setValue: function (val) {
+            var number=this._getInput();
+            number.value=this._parseInt(val);
+        },
+
+        _getValue:function(){
+            var number=this._getInput();
+            var value=number.value;
+            return this._parseInt(value);
+        },
+
+        _parseInt:function(val){
+            try{
+                return parseInt(val);
+            }catch(ex){
+                return 1;
+            }
+        },
+
+        _onPress: function (event) {
+            var id=event.currentTarget.dataset.id;
+            var value;
+            if(id==='add'){
+                value=this._getValue();
+                value+=1;
+                this._setValue(value);
+            }else{
+                value=this._getValue();
+                value-=1;
+                if(value < 1) value=1;
+                this._setValue(value);
+            }
+        },
+
+        _getInput:function(){
+            if(this._input) return this._input;
+            this._input=this.querySelector('md-input');
+            return this._input;
+        },
+
+        _onChange: function (event) {
+            var number=this._getInput();
+            var value=number.value;
+            try{
+                var test=parseInt(value);
+            }catch(ex){
+                number.value=1;
+            }
+
+        }
+    });
+
+</script>

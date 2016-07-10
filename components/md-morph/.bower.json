@@ -1,0 +1,59 @@
+{
+  "name": "md-morph",
+  "version": "1.2.0",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design"
+  ],
+  "main": "md-morph.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-morph/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "sass-animations": "~1.0.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.0",
+    "commit": "7657987d16ae20c91628a18c4ce32233efb58394"
+  },
+  "_source": "https://github.com/EllipticalElements/md-morph.git",
+  "_target": "~1.2.0",
+  "_originalSource": "md-morph"
+}

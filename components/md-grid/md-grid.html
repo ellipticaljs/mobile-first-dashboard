@@ -1,0 +1,128 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="column-header.html">
+<link rel="import" href="grid-item.html">
+<script>
+    Polymer({
+
+        is: 'md-grid',
+
+        behaviors:[Elliptical.ComponentBehavior],
+
+        properties: {
+           refreshUrl:{
+               type:String,
+               value:null
+           },
+           _service:{
+               type:Object,
+               value:null
+           }
+        },
+        
+        listeners:{
+            
+        },
+
+        ready:function(){
+            this._setService();
+            this._gridEvents();
+        },
+
+        _setService:function(){
+            var self=this;
+            this.$serviceAsync(function(service){
+                self._service=service;
+                self._isSorted(service);
+            });
+        },
+
+        _setGridState:function(data){
+            var self=this;
+            var field=data.field;
+            var sort=data.sort;
+            var target=this.element.find('column-header[field="' + field + '"]');
+            var columns=this._getColumns();
+
+            //ensure column-headers are distributed
+            setTimeout(function(){
+                self._setTarget(target,sort);
+                self._resetColumns(columns);
+            },200);
+        },
+
+        /**
+         *  verify grid needs to visually display sorted column state
+         * @param {function} Service
+         * @private
+         */
+        _isSorted:function(Service){
+            if(!Service) return;
+            var self=this;
+            var service=new Service();
+            var data=service.sorted();
+            if(data){
+                this._setGridState(data);
+            }else{
+                var columns=this._getColumns();
+                setTimeout(function(){
+                    self._resetColumns(columns);
+                },200);
+            }
+        },
+
+        _getColumns:function(){
+            return this.element.find('column-header[sort="true"]');
+        },
+
+        _gridEvents:function(){
+            var click=this._data.click;
+            this._event(this.element,click,'column-header[sort="true"]',this._onColumnClick.bind(this));
+            this._event(this.element,click,'[refresh]',this._onRefreshClick.bind(this));
+        },
+
+        _onColumnClick:function(event){
+            var target=$(event.currentTarget);
+            this._parseColumn(target);
+        },
+
+        _onRefreshClick:function(event){
+            var url=this.refreshUrl;
+            if(!url) return;
+            var Service=this._service;
+            if(!Service) return;
+            var service=new Service();
+            service.refresh(url);
+        },
+
+        _parseColumn:function(target){
+            var field=target.attr('field');
+            var sort=target[0].dataset.sort;
+            if(sort===undefined){
+                sort='asc';
+            }else{
+                sort=(sort==='asc') ? 'desc' : 'asc';
+            }
+            this._setQuery(field,sort);
+        },
+
+        _resetColumns:function(columns){
+            columns.not('.active').find('span[sort="true"]').removeClass('hide');
+        },
+
+        _setTarget:function(target,sort){
+            target.addClass('active');
+            target.find('span[sort="true"]').addClass('hide');
+            target.find('span[' + sort + ']').removeClass('hide');
+            target[0].dataset.sort=sort;
+        },
+
+        _setQuery:function(field,sortOrder){
+            var Service=this._service;
+            if(!Service) return;
+            var service=new Service();
+            service.sort({field:field,sortOrder:sortOrder});
+        }
+    });
+
+</script>

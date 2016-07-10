@@ -1,0 +1,221 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+
+<dom-module id="md-range">
+    <style>
+        :host .range-flex {
+            -webkit-display: flex;
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+    </style>
+    <template>
+        <input type="range" min="[[min]]" max="[[max]]"/>
+
+        <div class="progress"></div>
+        <div class="thumb"></div>
+        <div class="value">
+            <div class="range-flex column range-display">
+                <div class="range-value-container">
+                    <span class="range-value"></span>
+                </div>
+                <div class="range-value-border"></div>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-range',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            min: {
+                type: Number,
+                value: 0
+            },
+            max: {
+                type: Number,
+                value: 100
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: 0
+            },
+            event: {
+                type: String,
+                value: 'md.range.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setValue();
+            this._setDisabled();
+            this._setInputVisibility();
+            this._initElement();
+        },
+
+        _initElement: function () {
+            this._data.set('mousedown', false);
+            this._data.set('max', this.max);
+            this._data.set('min', this.min);
+            this._data.set('diff', this.max - this.min);
+            var input = this.element.find('input');
+            var val = input.val();
+            this._updateProgress(val);
+
+        },
+
+        _inputEvents: function () {
+            this._event(this.element, 'change', 'input', this._onChange.bind(this));
+            this._event(this.element, 'mousedown touchstart', 'input', this._onStart.bind(this));
+            this._event(this.element, 'mouseup touchend', this._onEnd.bind(this));
+            this._event(this.element, 'mousemove touchmove', this._onMove.bind(this));
+            this._event(this.element, 'mouseout touchleave', this._onExit.bind(this));
+        },
+
+        _calculateRatio: function (val) {
+            var diff = this._data.get('diff');
+            return (val / diff);
+        },
+
+        _onChange: function (event) {
+            if (this.disabled) return;
+            var element = this.element;
+            var thumb = element.find('.thumb');
+            var input = element.find('input');
+            var val = input.val();
+            thumb.find('.value').html(val);
+
+            var data = {
+                value: input.val(),
+                id: input.attr('id'),
+                name: input.attr('name')
+            };
+            element.trigger('md.range.change', data);
+        },
+
+        _onStart: function (event) {
+            var self = this;
+            this._resetSemanticState();
+            var thumb = this.element.find('.thumb');
+            var input = this.element.find('input');
+            var val = input.val();
+            thumb.find('.value').html(val);
+            this._data.set('mousedown', true);
+            thumb.find('.value').html(val);
+            input.addClass('active');
+            this._parseThumbTrack(event, thumb, input);
+            thumb.find('.value').html(val);
+            setTimeout(function () {
+                var valN = input.val();
+                self._updateProgress(valN);
+            }, 250);
+
+        },
+
+        _onEnd: function (event) {
+            this._data.set('mousedown', false);
+            $(this).removeClass('active');
+        },
+
+        _onMove: function (event) {
+            var thumb = this.element.find('.thumb');
+            var input = this.element.find('input');
+            var val = input.val();
+            if (this._data.get('mousedown')) {
+                this._updateProgress(val);
+                this._parseThumbTrack(event, thumb, input);
+            }
+        },
+
+        _onExit: function (event) {
+            if (!this._data.get('mousedown')) {
+                var thumb = this.element.find('.thumb');
+                if (thumb.hasClass('active')) {
+                    this._transition(thumb, {
+                        height: 0,
+                        width: 0,
+                        top: '10px',
+                        marginLeft: '-6px',
+                        opacity: 0,
+                        duration: 100
+                    });
+                }
+                thumb.removeClass('active');
+            }
+        },
+
+        _parseThumbTrack: function (event, thumb, input) {
+            var left;
+            if (!thumb.hasClass('active')) {
+                this._transition(thumb, {
+                    height: "30px",
+                    width: "30px",
+                    top: "0px",
+                    marginLeft: "-15px",
+                    opacity: 1,
+                    duration: 50
+                });
+            }
+
+            if (event.pageX === undefined || event.pageX === null) {//mobile
+                left = event.originalEvent.touches[0].pageX - input.offset().left;
+            }
+            else { // desktop
+                left = event.pageX - input.offset().left;
+            }
+            var width = input.outerWidth();
+            if (left < 0) left = 0;
+            else if (left > width) left = width;
+            thumb.addClass('active').css('left', left);
+        },
+
+        _updateProgress: function (val) {
+            var ratio = this._calculateRatio(val);
+            var obj = this._transformObj(ratio);
+            var progress = this.element.find('.progress');
+            var rangeValue = this.element.find('.range-value');
+            rangeValue.html(val);
+
+            progress.css(obj);
+        },
+
+        _transformObj: function (r) {
+            return {
+                '-webkit-transform': 'scaleX(' + r + ')',
+                transform: 'scaleX(' + r + ')'
+            };
+        }
+    });
+
+</script>

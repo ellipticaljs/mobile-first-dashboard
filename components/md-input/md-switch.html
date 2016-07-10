@@ -1,0 +1,90 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+
+<dom-module id="md-switch">
+    <style></style>
+    <template>
+        <label>
+            [[off]]
+            <input type="checkbox" [[disabled]] [[required]] [[checked]]>
+            <span class="lever"></span>
+            [[on]]
+        </label>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-switch',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            off: {
+                type: String,
+                value: null
+            },
+            on: {
+                type: String,
+                value: null
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            dataChecked: {
+                type: Boolean,
+                value: false
+            },
+            event: {
+                type: String,
+                value: 'md.switch.change'
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setCheckedProp();
+            this._setId();
+            this._setName();
+            this._setChecked();
+            this._setInputVisibility();
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'swiperight', function (event) {
+                self.element.find('input').prop("checked", true);
+            });
+
+            this._event(this.element, 'swipeleft', function (event) {
+                self.element.find('input').prop("checked", false);
+            });
+
+            this._event(this.element, 'change', 'input', function (event) {
+                self._resetSemanticState();
+                self._onChange(event);
+            });
+        }
+    });
+
+</script>

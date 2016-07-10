@@ -1,0 +1,191 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-textarea">
+    <style></style>
+    <template>
+        <span class="icon-[[icon]]"></span>
+        <textarea placeholder="[[placeholder]]"></textarea>
+        <label>[[label]]</label>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-textarea',
+
+        behaviors: [Elliptical.ComponentBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            placeholder: {
+                type: String,
+                value: ''
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            },
+            readonly: {
+                type: Boolean,
+                value: false
+            },
+            disableResize: {
+                type: Boolean,
+                value: false
+            },
+            icon:{
+                type:String,
+                value:null
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setIcon();
+            this._setValue();
+            this._setResize();
+            this._setReadOnly();
+            this._setDisabled();
+        },
+
+        _setValueProp: function () {
+            var element = this.element;
+            var node = this;
+            Object.defineProperty(node, 'value', {
+                get: function () {
+                    return element.find('textarea').val();
+                },
+                set: function (newValue) {
+                    element.find('textarea').val(newValue);
+                },
+                enumerable: true,
+                configurable: true
+            });
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'focus', 'textarea', function (event) {
+                if (!self.readonly) $(this).siblings('label, i').addClass('active');
+            });
+
+            this._event(this.element, 'blur', 'textarea', function (event) {
+                var $input = $(this);
+                if ($input.val().length === 0 && $input.attr('placeholder') === '') {
+                    $input.siblings('label, i').removeClass('active');
+                }
+            });
+
+            this._event(this.element, 'change', 'textarea', function (event) {
+                var $input = $(this);
+                if ($input.val().length === 0 && $input.attr('placeholder') !== '') {
+                    $input.siblings('label, i').addClass('active');
+                }
+                self._resetSemanticState();
+                self._onChange(event);
+            });
+        },
+
+        _setValue: function () {
+            if (this.dataValue && this.dataValue !== undefined) {
+                this.value = this.dataValue;
+                var label = this.element.find('label');
+                label.addClass('active');
+            }
+        },
+
+        _setId: function () {
+            if (this.dataId) {
+                var textarea = this.element.find('textarea');
+                textarea.attr('id', this.dataId);
+            }
+        },
+
+        _setName: function () {
+            if (this.dataName) {
+                var textarea = this.element.find('textarea');
+                textarea.attr('name', this.dataName);
+            }
+        },
+
+        _setRequired: function () {
+            if (this.required) {
+                var textarea = this.element.find('textarea');
+                textarea.attr('required', '');
+            }
+        },
+
+        _setReadOnly: function () {
+            if (this.readonly) {
+                var textarea = this.element.find('textarea');
+                textarea.attr('readonly', '');
+            }
+        },
+
+        _setDisabled: function () {
+            if (this.disabled) {
+                var textarea = this.element.find('textarea');
+                textarea.attr('disabled', '');
+            }
+        },
+
+        _setResize: function () {
+            if (this.disableResize) {
+                var textarea = this.element.find('textarea');
+                textarea.css({resize: 'none'});
+            }
+        },
+
+        _onIconSet: function (span) {
+            span.addClass('prefix');
+        },
+
+        _setIcon:function(){
+            if (!this.icon) return;
+            var span = this.element.find('span');
+            var icon = 'icon-' + this.icon;
+            span.attr('class', '');
+            span.addClass(icon);
+            this._onIconSet(span);
+        },
+
+        _onChange: function (event) {
+            var element = $(event.currentTarget);
+            var data = {
+                value: element.val(),
+                id: element.attr('id'),
+                name: element.attr('name')
+            };
+            this.element.trigger('md.textarea.change', data);
+        }
+    });
+
+</script>

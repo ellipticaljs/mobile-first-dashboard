@@ -1,0 +1,15 @@
+<link rel="import" href="../polymer/polymer.html">
+<script>
+
+    Polymer({
+        is: 'md-radio-list',
+
+        resetError:function(){
+            var radio=$(this).find('md-radio');
+            if(radio[0]){
+                radio.removeClass('error');
+            }
+        }
+    });
+
+</script>

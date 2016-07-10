@@ -1,0 +1,400 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-input-validate">
+    <style>
+        :host{
+            position:relative;
+        }
+        :host>input.error{
+            background:none !important;
+            border-color:#bc5251 !important;
+            border-top-width:0 !important;
+            border-left-width:0 !important;
+            border-right-width:0 !important;
+        }
+        :host>input.error+label{
+            color:#bc5251;
+        }
+        :host .prefix.success{
+            color:#468847;
+            background:none !important;
+        }
+        :host .prefix.error{
+            color:#bc5251;
+            background:none !important;
+        }
+        :host .message-tip{
+            position: absolute;
+            min-width:300px;
+            bottom:-30px;
+            left:30px;
+            z-index: 10;
+            max-width: 450px;
+            padding: 5px 8px;
+            margin: 3px 0 0;
+            font-size: 13px;
+            font-weight: normal;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 3px;
+            display:none;
+            font-family:'robotomedium';
+        }
+        :host .message-tip::before{
+            position: absolute;
+            bottom: 100%;
+            left: 10px;
+            z-index: 15;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            content: " ";
+            border: solid transparent;
+            margin-left: -1px;
+            border-width: 6px;
+        }
+        :host .message-tip::after{
+            position: absolute;
+            bottom: 100%;
+            left: 11px;
+            z-index: 15;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            content: " ";
+            border: solid transparent;
+            margin-left: -1px;
+            border-width: 5px;
+        }
+        :host .message-tip.error {
+            color: #911 !important;
+            background-color: #fcdede !important;
+            border-color: #d2b2b2 !important;
+            display:inline-block;
+        }
+        :host .message-tip.error::before{
+            border-bottom-color: #d2b2b2;
+        }
+        :host .message-tip.error::after{
+            border-bottom-color: #fcdede;
+        }
+        :host .message-tip.warning {
+            color: #c09853 !important;
+            background-color: #fcf8e3 !important;
+            border-color: #c09853 !important;
+            display:inline-block;
+        }
+        :host .message-tip.warning::before{
+            border-bottom-color: #c09853;
+        }
+        :host .message-tip.warning::after{
+            border-bottom-color: #fcf8e3;
+        }
+    </style>
+    <template>
+        <span class="icon-[[icon]] prefix"></span>
+        <input type="[[type]]" placeholder="[[placeholder]]" value="[[value]]">
+        <label class="[[active]]">[[label]]</label>
+        <div class="message-tip"></div>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-input-validate',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            placeholder: {
+                type: String,
+                value: ''
+            },
+            type: {
+                type: String,
+                value: 'text'
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            icon: {
+                type: String,
+                value: 'check'
+            },
+            errorIcon:{
+                type: String,
+                value: 'error'
+            },
+            warningIcon:{
+                type: String,
+                value: 'warning'
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            event: {
+                type: String,
+                value: 'md.input.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            },
+            readonly: {
+                type: Boolean,
+                value: false
+            },
+            numeric:{
+                type:Boolean,
+                value:false
+            },
+            min:{
+                type:Number,
+                value:0
+            },
+            max:{
+                type:Number,
+                value:0
+            },
+            message:{
+                type:String,
+                value:'error'
+            },
+            _state:{
+                type:Boolean,
+                value:false
+            },
+            _prefix:{
+                type:Object,
+                value:null
+            },
+            _messageTip:{
+                type:Object,
+                value:null
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._setMessageTip();
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setLabel();
+            this._setValue();
+            this._setIcon();
+            this._setPrefix();
+            this._setReadOnly();
+            this._setDisabled();
+            this._keyDownEvent();
+        },
+
+        _setPrefix:function(){
+            var prefix=this.querySelector('.prefix');
+            this._prefix=prefix;
+        },
+
+        _setMessageTip:function(){
+            this._messageTip=this.querySelector('.message-tip');
+        },
+
+        _setSuccessIcon:function(){
+            this._resetIcons();
+            this._resetCss();
+            this._prefix.classList.add('icon-' + this.icon);
+            this._prefix.classList.add('success');
+        },
+
+        _setErrorIcon:function(state){
+            this._resetIcons();
+            this._resetCss();
+            this._prefix.classList.add('icon-' + state);
+            this._prefix.classList.add(state);
+        },
+
+        _resetIcons:function(){
+            this._prefix.classList.remove('icon-' + this.icon);
+            this._prefix.classList.remove('icon-' + this.errorIcon);
+            this._prefix.classList.remove('icon-' + this.warningIcon);
+        },
+
+        _resetCss:function(){
+            this._prefix.classList.remove('success');
+            this._prefix.classList.remove('warning');
+            this._prefix.classList.remove('error');
+        },
+
+        _showMessageTip:function(state){
+            this._resetMessageTip();
+            this._messageTip.classList.add(state);
+            this._messageTip.innerHTML=this.message;
+        },
+
+        _resetMessageTip:function(){
+            this._messageTip.classList.remove('warning');
+            this._messageTip.classList.remove('error');
+        },
+
+        _reset:function(){
+            this._resetCss();
+            this._resetMessageTip();
+            this._state=false;
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'focus', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if (!self.readonly && (!placeholder || placeholder==='')) {
+                    $(this).siblings('label, i').addClass('active');
+                    self.element.find('span').addClass('active');
+                }
+            });
+
+            this._event(this.element, 'blur', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if ($input.val().length === 0 && (!placeholder || placeholder==='')) {
+                    $input.siblings('label, i').removeClass('active');
+                }
+                self.element.find('span').removeClass('active');
+                self._onBlur(event);
+            });
+
+            this._event(this.element, 'change', 'input', function (event) {
+                var $input = $(this);
+                var placeholder=$input.attr('placeholder');
+                if (!self.readonly && (!placeholder || placeholder==='')) {
+                    $input.siblings('label, i').addClass('active');
+                    self.element.find('span').addClass('active');
+                }
+                self._resetSemanticState();
+                self._onChange(event);
+            });
+        },
+
+        _keyDownEvent:function(){
+            var self=this;
+            this._event(this.element, 'keydown', 'input', function (e) {
+                if(self._state) self._reset();
+                if(!this.numeric) return;
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Allow: Ctrl+A, Command+A
+                        (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                        // Allow: home, end, left, right, down, up
+                        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+
+            });
+        },
+
+        _setValue: function () {
+            if (this.dataValue && this.dataValue !== undefined) {
+                this.value = this.dataValue;
+                var label = this.element.find('label');
+                label.addClass('active');
+            }
+        },
+
+        _setIcon:function(){
+            var span = this.element.find('span');
+            var icon = 'icon-' + this.icon;
+            span.addClass(icon);
+            this._onIconSet(span);
+        },
+
+        _onIconSet: function (span) {
+            span.addClass('prefix');
+        },
+
+        _onChange: function (event) {
+            var element = $(event.currentTarget);
+            var data = {
+                value: element.val(),
+                id: element.attr('id'),
+                name: element.attr('name')
+            };
+
+            this.element.trigger('md.input.change', data);
+        },
+
+        _onBlur:function(event){
+            var element = $(event.currentTarget);
+            var value=element.val();
+            if(value==='') return;
+            if(this.numeric){
+                value=parseFloat(value);
+                if(this.min){
+                    if(value < this.min) element.val('');
+                }
+                if(this.max){
+                    if(value > this.max) element.val('');
+                }
+            }
+
+            var data = {
+                value: value,
+                id: element.attr('id'),
+                name: element.attr('name')
+            };
+
+            this.element.trigger('md.input.validate', data);
+        },
+
+        setActive:function(){
+            var label = this.element.find('label');
+            label.addClass('active');
+        },
+
+        setName:function(val){
+            this.dataName=val;
+            this._setName();
+        },
+
+        setId:function(val){
+            this.dataId=val;
+            this._setId();
+        },
+
+        show:function(state,message){
+            if(message !==undefined) this.message=message;
+            if(state===undefined) state='error';
+            this._setErrorIcon(state);
+            this._showMessageTip(state);
+            this._state=true;
+        },
+
+        showSuccess:function(){
+            this._resetMessageTip();
+            this._setSuccessIcon();
+        }
+    });
+
+</script>

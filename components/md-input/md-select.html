@@ -1,0 +1,129 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-select">
+    <style>
+        :host ::content label{
+            color:#b8b8b8;
+        }
+    </style>
+    <template>
+        <span id="span-icon"></span>
+        <span id="prefix-icon" style="display:none"></span>
+        <content select="select"></content>
+        <label>[[label]]</label>
+        <input type="hidden">
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-select',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            icon: {
+                type: String,
+                value: 'arrow-drop-down'
+            },
+            prefixIcon:{
+                type:String,
+                value:null
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setValue();
+            this._setIcon();
+            this._setPrefixIcon();
+            this._setReadOnly();
+            this._setDisabled();
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'change', 'select', function (event) {
+                var target = $(event.currentTarget);
+                var val = target.val();
+                self.value = val;
+                self._resetSemanticState();
+                self._onChange(target, val);
+            });
+        },
+
+        _setValue: function (val) {
+            if (this.dataValue && this.dataValue !== undefined) {
+                var select = this.element.find('select');
+                select.val(this.dataValue);
+                this.value = this.dataValue;
+            }
+        },
+
+        _setIcon:function(){
+            var span=this.$['span-icon'];
+            var icon = 'icon-' + this.icon;
+            span.classList.add(icon);
+        },
+
+        _setPrefixIcon:function(){
+            if (!this.prefixIcon) return;
+            var span=this.$['prefix-icon'];
+            var icon = 'icon-' + this.prefixIcon;
+            span.classList.add(icon);
+            span.classList.add('prefix');
+            span.setAttribute('style','');
+        },
+
+
+        _onChange: function (target, val) {
+            var id = this.dataId;
+            var name = this.dataName;
+            var data = {
+                value: val,
+                id: id,
+                name: name
+            };
+            this.element.trigger('md.select.change', data);
+        },
+
+        _setDisabled: function () {
+            if (this.disabled) this.element.find('select').attr('disabled', true);
+        }
+
+    });
+
+</script>

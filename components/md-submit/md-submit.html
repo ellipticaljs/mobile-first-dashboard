@@ -1,0 +1,87 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<style>
+    md-submit{
+        display:inline-block;
+        border-radius:3px;
+    }
+    md-submit paper-button {
+        padding:0 !important;
+        margin:0 !important;
+    }
+    md-submit paper-button .content.paper-button {
+        padding:0;
+    }
+    md-submit paper-button button {
+        padding: 0.80em 0.57em;
+        background-color: transparent;
+        border-color: transparent;
+        margin:0 !important;
+    }
+    md-submit paper-button button::-moz-focus-inner {
+        border: 0;
+    }
+
+</style>
+<dom-module id="md-submit">
+    <template>
+        <paper-button id="paperButton">
+            <button id="submitButton">
+                <content></content>
+            </button>
+        </paper-button>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-submit',
+
+        properties: {
+            cssClass:{
+                type:String,
+                value:null
+            },
+            raised:{
+                type:Boolean,
+                value:false
+            },
+            elevation:{
+                type:Number,
+                value:1
+            }
+        },
+
+        listeners:{
+
+        },
+
+        ready:function(){
+            this._setButtonClass();
+            if(this.raised) this._setRaisedButton();
+        },
+
+        _setButtonClass:function(){
+            if(this.cssClass){
+                var css=this.cssClass.split(' ');
+                var button=this.$.submitButton;
+                css.forEach(function(c){
+                    button.classList.add(c);
+                });
+            }
+        },
+
+        _setRaisedButton:function(){
+            this.$.paperButton.setAttribute('elevation',this.elevation);
+            this.$.paperButton.setAttribute('raised','');
+        },
+
+        _onClick:function(){
+            var button=this.$.submitButton;
+            button.click();
+        }
+    });
+
+</script>

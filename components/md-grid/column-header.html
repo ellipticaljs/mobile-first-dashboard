@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<style>
+    column-header{
+        display:block;
+    }
+
+    column-header[sort=true]{
+        cursor:pointer;
+    }
+    column-header[sort=true]>.icon-sort{
+        display:block;
+    }
+    column-header.active>.icon-sort{
+        display:none;
+    }
+    colun-header[empty] > *{
+        display:none;
+    }
+</style>
+<dom-module id="column-header">
+    <template>
+        <span class="label"><content></content></span>
+        <span class="icon-sort hide" sort="[[sort]]"></span>
+        <span class="icon-keyboard-arrow-up hide" arrow asc></span>
+        <span class="icon-keyboard-arrow-down hide" arrow desc></span>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+        is: 'column-header',
+        properties:{
+            sort:{
+                type:String,
+                value:''
+            }
+        }
+    });
+
+</script>

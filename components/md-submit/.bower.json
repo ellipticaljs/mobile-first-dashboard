@@ -1,0 +1,59 @@
+{
+  "name": "md-submit",
+  "version": "1.2.2",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "Form submit paper button",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design"
+  ],
+  "main": "md-confirm.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-submit",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "paper-button": "PolymerElements/paper-button#~1.0.11"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  },
+  "_release": "1.2.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.2",
+    "commit": "48fdee6596f374b2151c762c1d938f2ae27ef73c"
+  },
+  "_source": "https://github.com/EllipticalElements/md-submit.git",
+  "_target": "~1.2.0",
+  "_originalSource": "md-submit"
+}

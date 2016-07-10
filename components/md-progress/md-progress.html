@@ -1,0 +1,192 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
+
+
+<dom-module id="md-progress">
+    <style>
+        :host{
+            position:absolute;
+            display:block;
+            width:100%;
+            z-index:10;
+        }
+        :host>paper-progress{
+            width:100%;
+            --paper-progress-active-color: #F44336;
+
+        }
+        :host>paper-progress.hidden{
+            visibility: hidden;
+        }
+    </style>
+    <template>
+       <paper-progress id="paperProgress" class="hidden"></paper-progress>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-progress',
+        properties:{
+            color:{
+                type:String,
+                value:null
+            },
+            secondaryColor:{
+                type:String,
+                value:null
+            },
+            disabled:{
+                type:Boolean,
+                value:false
+            },
+            max:{
+                type:Number,
+                value:100
+            },
+            min:{
+                type:Number,
+                value:0
+            },
+            ratio:{
+                type:Number,
+                value:0
+            },
+            step:{
+                type:Number,
+                value:1
+            },
+            value:{
+                type:Number,
+                value:0
+            },
+            zIndex:{
+                type:String,
+                value:null
+            },
+            _animating:{
+                type:Boolean,
+                value:false
+            },
+            _currentIncrement:{
+                type:Number,
+                value:0
+            }
+        },
+
+        ready:function(){
+            this._initPaperProgress();
+            this._setZIndex();
+            this._setSecondaryColor();
+            this._setColor();
+        },
+
+        _initPaperProgress:function(){
+            var progress=this.$.paperProgress;
+            progress.disabled=this.disabled;
+            progress.max=this.max;
+            progress.min=this.min;
+            progress.step=this.step;
+            progress.value=this.value;
+            if(this.value > this.min) this._setVisible();
+        },
+
+        _nextProgress:function(){
+            var progress=this.$.paperProgress;
+            this._animating = true;
+            if (progress.value < this._currentIncrement) {
+                progress.value += (progress.step);
+            } else if(progress.value===this.max) {
+                this._animating=false;
+                this._setHidden();
+                return;
+            }else{
+                this.value=this._currentIncrement;
+                this._animating=false;
+                return;
+            }
+            var animationFrame = requestAnimationFrame(this._nextProgress.bind(this));
+        },
+
+        _setVisible:function(){
+            var progress=this.$.paperProgress;
+            progress.classList.remove('hidden');
+        },
+
+        _setHidden:function(){
+            var progress=this.$.paperProgress;
+            progress.classList.add('hidden');
+        },
+
+        _setZIndex:function(){
+            var zIndex=this.zIndex;
+            if(zIndex) this.style.zIndex=zIndex;
+        },
+
+        _setSecondaryColor:function(){
+            if(this.secondaryColor){
+                var container=this.querySelector('#progressContainer');
+                container.style.backgroundColor=this.secondaryColor;
+            }
+        },
+
+        _setColor:function(){
+            if(this.color){
+                var bar=this.querySelector('#primaryProgress');
+                bar.style.backgroundColor=this.color;
+            }
+        },
+
+        _increment:function(value){
+            if(this._currentIncrement > value) return;
+            this._currentIncrement=value;
+            if(this._currentIncrement>this.max) this._currentIncrement=this.max;
+            this._setVisible();
+            this._nextProgress();
+        },
+
+        _animate:function(){
+            this._currentIncrement=this.max;
+            this._setVisible();
+            this._nextProgress();
+        },
+
+        init:function(){
+            var progress=this.$.paperProgress;
+            this.value=this.min;
+            this._currentIncrement=this.min;
+            progress.value = this.min;
+        },
+
+        increment:function(value){
+            var self=this;
+            if(this._animating){
+                var intervalId=setInterval(function(){
+                    if(!self._animating){
+                        clearInterval(intervalId);
+                        self._increment(value);
+                    }
+                },10)
+            }else this._increment(value);
+        },
+
+        animate:function(){
+            var self=this;
+            if(this._animating){
+                var intervalId=setInterval(function(){
+                    if(!self._animating){
+                        clearInterval(intervalId);
+                        self._animate();
+                    }
+                },10)
+            }else this._animate();
+        },
+
+        hide:function(){
+            this._setHidden();
+        }
+
+    });
+
+</script>

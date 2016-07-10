@@ -1,0 +1,50 @@
+{
+  "name": "md-confirm",
+  "version": "1.2.1",
+  "authors": [
+    "S. Francis"
+  ],
+  "description": "material design confirmation component",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "md",
+    "material design"
+  ],
+  "main": "md-confirm.html",
+  "license": "MIT",
+  "homepage": "https://github.com/EllipticalElements/md-confirm",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "elliptical-polymer-behaviors": "~1.2.0",
+    "neon-animation": "PolymerElements/neon-animation#~1.2.2"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

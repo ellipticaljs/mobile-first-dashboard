@@ -1,0 +1,91 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+<link rel="import" href="md-radio-list.html">
+
+<dom-module id="md-radio">
+    <style>
+        :host.error{
+            background:none !important;
+        }
+        :host.error:hover{
+            background:none !important;
+        }
+    </style>
+    <template>
+        <input type="radio" class="[[cssClass]]" value="[[value]]">
+        <label>[[label]]</label>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-radio',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: null
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            cssClass: {
+                type: String,
+                value: null
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            dataChecked: {
+                type: Boolean,
+                value: false
+            },
+            event: {
+                type: String,
+                value: 'md.radio.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setCheckedProp();
+            this._setId();
+            this._setName();
+            this._setLabel();
+            this._setValue();
+            this._setChecked();
+            this._setDisabled();
+            this._setInputVisibility();
+        },
+
+        _onChange:function(event){
+            if(this.required){
+                var radioList=this.element.parents('md-radio-list');
+                if(radioList[0]) radioList[0].resetError();
+            }
+        }
+    });
+
+</script>

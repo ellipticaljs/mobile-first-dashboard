@@ -1,0 +1,28 @@
+{
+  "name": "faker-import",
+  "description": "reference the fakerjs library using html imports",
+  "version": "1.0.0",
+  "main": "faker-import.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "components",
+    "moment",
+    "html imports"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/ellipticaljs/faker-import",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "faker": "Faker#~3.0.1"
+  }
+}

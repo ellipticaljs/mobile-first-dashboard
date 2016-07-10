@@ -1,0 +1,127 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../elliptical-polymer-behaviors/component-behavior.html">
+<link rel="import" href="input-behaviors.html">
+
+<dom-module id="md-input-icon-button">
+    <style></style>
+    <template>
+        <input type="text" placeholder="[[placeholder]]">
+        <label class="[[active]]">[[label]]</label>
+        <button><span class="icon-[[icon]]"></span></button>
+    </template>
+</dom-module>
+<script>
+
+    Polymer({
+
+        is: 'md-input-icon-button',
+
+        behaviors: [Elliptical.ComponentBehavior, Elliptical.MDInputBehavior],
+
+        properties: {
+            label: {
+                type: String,
+                value: ''
+            },
+            placeholder: {
+                type: String,
+                value: ''
+            },
+            required: {
+                type: Boolean,
+                value: false
+            },
+            icon: {
+                type: String,
+                value: null
+            },
+            dataId: {
+                type: String,
+                value: null
+            },
+            dataName: {
+                type: String,
+                value: null
+            },
+            dataValue: {
+                type: String,
+                value: null
+            },
+            event: {
+                type: String,
+                value: 'md.input-icon-button.change'
+            },
+            disabled: {
+                type: Boolean,
+                value: false
+            },
+            readonly: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        listeners: {},
+
+        ready: function () {
+            this._inputEvents();
+            this._setRequired();
+            this._setValueProp();
+            this._setId();
+            this._setName();
+            this._setLabel();
+            this._setValue();
+            this._setIcon();
+            this._setReadOnly();
+            this._setDisabled();
+        },
+
+        _inputEvents: function () {
+            var self = this;
+            this._event(this.element, 'focus', 'input', function (event) {
+                if (self.readonly) return;
+                $(this).siblings('label, i').addClass('active');
+                self.element.find('span').addClass('active');
+            });
+
+            this._event(this.element, 'blur', 'input', function (event) {
+                var $input = $(this);
+                if ($input.val().length === 0 && $input.attr('placeholder') === '') {
+                    $input.siblings('label, i').removeClass('active');
+                }
+                self.element.find('span').removeClass('active');
+            });
+
+            this._event(this.element, 'change', 'input', function (event) {
+                var $input = $(this);
+                if ($input.val().length === 0 && $input.attr('placeholder') !== '') {
+                    $input.siblings('label, i').addClass('active');
+                    self.element.find('span').addClass('active');
+                }
+                self._resetSemanticState();
+                self._onChange(event);
+            });
+
+            this._event(this.element, this._data.click, 'button', this._onButtonClick.bind(this));
+        },
+
+        _setValue: function () {
+            if (this.dataValue && this.dataValue !== undefined) {
+                this.value = this.dataValue;
+                var label = this.element.find('label');
+                label.addClass('active');
+            }
+        },
+
+        _onButtonClick: function (event) {
+            var data = {
+                value: this.value,
+                id: this.dataId,
+                name: this.dataName
+            };
+
+            this.element.trigger('md.input.icon.button.submit', data);
+        }
+    });
+
+</script>
