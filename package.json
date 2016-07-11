@@ -8,6 +8,12 @@
     "type": "git",
     "url": "https://github.com/ellipticaljs/mobile-first-dashboard.git"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "dependencies":{
     "elliptical-sass": "git+https://github.com/ellipticaljs/sass.git",
     "sass-md-components": "git+https://github.com/ellipticaljs/sass-md-components.git",
