@@ -1196,7 +1196,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: none !important; }
 
 .show-for-tablet, .show-for-medium, .show-for-tablet-up, .show-for-medium-up .show-for-desktop, .show-for-large {
-  display: initial !important; }
+  display: initial; }
   .show-for-tablet.block, .show-for-medium.block, .show-for-tablet-up.block, .show-for-medium-up .show-for-desktop.block, .show-for-large.block {
     display: block; }
   .show-for-tablet.inline, .show-for-medium.inline, .show-for-tablet-up.inline, .show-for-medium-up .show-for-desktop.inline, .show-for-large.inline {
@@ -1210,7 +1210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     display: flex; }
 
 .hide-for-touch, .hide-for-phone, .hide-for-small, .hide-for-tablet-down, .hide-for-medium-down {
-  display: initial !important; }
+  display: initial; }
   .hide-for-touch.block, .hide-for-phone.block, .hide-for-small.block, .hide-for-tablet-down.block, .hide-for-medium-down.block {
     display: block; }
   .hide-for-touch.inline, .hide-for-phone.inline, .hide-for-small.inline, .hide-for-tablet-down.inline, .hide-for-medium-down.inline {
@@ -1225,7 +1225,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 @media only screen and (max-width: 640px) {
   .show-for-phone, .show-for-small, .show-for-tablet-down, .show-for-large-down, .show-for-medium-down {
-    display: initial !important; }
+    display: initial; }
     .show-for-phone.block, .show-for-small.block, .show-for-tablet-down.block, .show-for-large-down.block, .show-for-medium-down.block {
       display: block; }
     .show-for-phone.inline, .show-for-small.inline, .show-for-tablet-down.inline, .show-for-large-down.inline, .show-for-medium-down.inline {
@@ -1240,7 +1240,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   .hide-for-tablet-down, .hide-for-medium-down, .show-for-tablet, .show-for-medium, .show-for-tablet-up, .show-for-medium-up, .show-for-desktop, .show-for-large {
     display: none !important; }
   .hide-for-tablet, .hide-for-medium, .hide-for-tablet-up, .hide-for-medium-up, .hide-for-desktop, .hide-for-x-large, .hide-for-large {
-    display: initial !important; }
+    display: initial; }
     .hide-for-tablet.block, .hide-for-medium.block, .hide-for-tablet-up.block, .hide-for-medium-up.block, .hide-for-desktop.block, .hide-for-x-large.block, .hide-for-large.block {
       display: block; }
     .hide-for-tablet.inline, .hide-for-medium.inline, .hide-for-tablet-up.inline, .hide-for-medium-up.inline, .hide-for-desktop.inline, .hide-for-x-large.inline, .hide-for-large.inline {
@@ -1255,7 +1255,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   .hide-for-phone, .hide-for-small {
     display: none !important; }
   .show-for-touch {
-    display: initial !important; }
+    display: initial; }
     .show-for-touch.block {
       display: block; }
     .show-for-touch.inline {
@@ -1274,7 +1274,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   .show-for-phone, .show-for-small {
     display: none !important; }
   .show-for-large-down, .show-for-tablet, .show-for-tablet-down, .show-for-medium-down, .show-for-medium, .show-for-tablet-up, .show-for-medium-up {
-    display: initial !important; }
+    display: initial; }
     .show-for-large-down.block, .show-for-tablet.block, .show-for-tablet-down.block, .show-for-medium-down.block, .show-for-medium.block, .show-for-tablet-up.block, .show-for-medium-up.block {
       display: block; }
     .show-for-large-down.inline, .show-for-tablet.inline, .show-for-tablet-down.inline, .show-for-medium-down.inline, .show-for-medium.inline, .show-for-tablet-up.inline, .show-for-medium-up.inline {
@@ -1291,7 +1291,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   .hide-for-tablet-down, .hide-for-medium-down {
     display: none !important; }
   .hide-for-desktop, .hide-for-x-large, .hide-for-large {
-    display: initial !important; }
+    display: initial; }
     .hide-for-desktop.block, .hide-for-x-large.block, .hide-for-large.block {
       display: block; }
     .hide-for-desktop.inline, .hide-for-x-large.inline, .hide-for-large.inline {
@@ -1314,7 +1314,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 @media only screen and (min-width: 1025px) {
   .show-for-large, .show-for-large-down, .show-for-large-up {
-    display: initial !important; }
+    display: initial; }
     .show-for-large.block, .show-for-large-down.block, .show-for-large-up.block {
       display: block; }
     .show-for-large.inline, .show-for-large-down.inline, .show-for-large-up.inline {
@@ -1329,7 +1329,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 @media only screen and (min-width: 1400px) {
   .show-for-x-large, .show-for-large-up, .hide-for-large-down {
-    display: initial !important; }
+    display: initial; }
     .show-for-x-large.block, .show-for-large-up.block, .hide-for-large-down.block {
       display: block; }
     .show-for-x-large.inline, .show-for-large-up.inline, .hide-for-large-down.inline {
@@ -1346,7 +1346,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 @media only screen and (orientation: portrait) {
   .show-for-portrait, .hide-for-landscape {
-    display: initial !important; }
+    display: initial; }
     .show-for-portrait.block, .hide-for-landscape.block {
       display: block; }
     .show-for-portrait.inline, .hide-for-landscape.inline {
@@ -1365,7 +1365,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   .show-for-portrait, .hide-for-landscape {
     display: none; }
   .show-for-landscape, .hide-for-portrait {
-    display: initial !important; }
+    display: initial; }
     .show-for-landscape.block, .hide-for-portrait.block {
       display: block; }
     .show-for-landscape.inline, .hide-for-portrait.inline {
