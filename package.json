@@ -1,7 +1,7 @@
 {
   "name": "mobile-first-dashboard",
   "description": "mobile first dashboard built over polymer and elliptical",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "author": "S. Francis",
   "license": "MIT",
   "repository": {
