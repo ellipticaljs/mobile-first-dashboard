@@ -22,7 +22,7 @@ bower
 
 ``` bash
 
-git clone https://github.com/ellipticaljs/mobile-first-dashboard.git#skeleton
+git clone git clone -b skeleton https://github.com/ellipticaljs/mobile-first-dashboard.git
 mv ./mobile-first-dashboard  my-project
 cd my-project
 
