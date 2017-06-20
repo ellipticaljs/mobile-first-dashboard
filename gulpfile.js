@@ -88,7 +88,7 @@ gulp.task('db-crud-controller', function () {
     var argv = require('minimist')(process.argv.slice(2));
     var className=argv.class;
     var icon=argv.icon;
-    if(icon===undefined) icon='edit';
+    if(icon===undefined) icon='create';
     if(className===undefined){
         console.log("Error: Class required");
         return;
@@ -182,7 +182,7 @@ gulp.task('db-list-view', function () {
         console.log("Error: Class required");
         return;
     }
-    if(icon===undefined) icon='edit';
+    if(icon===undefined) icon='create';
     var params={
         name:name,
         folder:folder,
@@ -210,7 +210,7 @@ gulp.task('db-grid-view', function () {
         console.log("Error: Class required");
         return;
     }
-    if(icon===undefined) icon='edit';
+    if(icon===undefined) icon='create';
     var params={
         name:name,
         folder:folder,
@@ -238,7 +238,7 @@ gulp.task('db-detail-view', function () {
         console.log("Error: Class required");
         return;
     }
-    if(icon===undefined) icon='edit';
+    if(icon===undefined) icon='create';
     var params={
         name:name,
         folder:folder,
